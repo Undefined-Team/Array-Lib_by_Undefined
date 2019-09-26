@@ -1,2 +1,2 @@
-# ud_arr-Lib
+# Array-Lib
 Simple C lib for array
