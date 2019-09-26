@@ -1,2 +1,2 @@
-# Array-Lib
+# Array Lib by Undefined
 Simple C lib for array
