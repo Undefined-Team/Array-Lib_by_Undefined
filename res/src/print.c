@@ -1,4 +1,4 @@
-#include "ud_arr.h"
+#include <ud_array.h>
 
 void        ud_arr_print_ctr(ud_arr *arr, char *format, size_t space)
 {
@@ -15,7 +15,7 @@ void        ud_arr_print_ctr(ud_arr *arr, char *format, size_t space)
         {
             printf(format, *val);
             val += type_size;
-            printf(" %s", len > 0 ? "," : "");
+            printf("%s ", len > 0 ? "," : "");
         }
         printf("]%s\n", UD_UT_COLOR_N);
     }

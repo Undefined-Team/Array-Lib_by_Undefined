@@ -3,7 +3,9 @@
 
 // Lib
 #include <stdlib.h>
-#include "ud_utils.h"
+#include <stdarg.h>
+#include <ud_utils.h>
+#include <ud_memory.h>
 
 // Macro
 # define ud_arr_free(w)         ud_arr_free_r(w, 0)
@@ -31,7 +33,7 @@ ud_arr                          *ud_arr_init_z(size_t type_size, size_t len);
 ud_arr                          *ud_arr_init_val(size_t type_size, size_t len, char *set_val);
 ud_arr                          *ud_arr_cpy(ud_arr *src);
 void                            ud_arr_free_r(ud_arr *arr, int depth);
-ud_arr                          ud_arr_set(size_t type_size, size_t len, ...);
+ud_arr                          *ud_arr_set(size_t type_size, size_t len, ...);
 void                            ud_arr_print_ctr(ud_arr *arr, char *format, size_t space);
 
 #endif
