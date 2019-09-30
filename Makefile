@@ -13,35 +13,48 @@ INCLUDE           =     -I$(INCLUDE_PATH)
 SRCS              =     $(wildcard $(SRC_PATH)*.c)
 SRC               =     $(filter-out $(SRC_BLACKLIST), $(SRCS))
 BINS              =     $(SRC:.c=.o)
-BIN               =     $(addprefix $(BIN_PATH), $(notdir $(BINS)))
+BIN               =     $(addprefix $(BIN_PATH), $(addprefix $(LIBNAME)_, $(notdir $(BINS))))
 
 COMPILE           =     $(CC) $(FLAGS) $(INCLUDE)
 
-.PHONY            =     all clean fclean re
+.PHONY            =     all clean fclean re static
 
 # Colors
-G                 =     \033[1;32m
-N                 =     \33[0m
+G                 =     \33[1;32m
+N                 =     \033[0m
 # Colors
 
-all: $(NAME)
+all: libud_$(LIBNAME).a
 
-$(NAME): $(BIN)
-	@ar rc ${LIBNAME} $^
-	@echo "	$(G)Success: Library ${LIBNAME} compiled.$(N)"
-	@ranlib ${LIBNAME}
-	@echo "	$(G)Success: Library ${LIBNAME} indexed.$(N)"
+libud_$(LIBNAME).a: $(BIN)
+	@ar rc libud_${LIBNAME}.a ${BIN}
+	@echo "\t$(G)Success: Library libud_${LIBNAME}.a compiled.$(N)"
+	@ranlib libud_${LIBNAME}.a
+	@echo "\t$(G)Success: Library libud_${LIBNAME}.a indexed.$(N)"
 
-$(BIN_PATH)%.o: $(SRC_PATH)%.c
+$(BIN_PATH)$(LIBNAME)_%.o: $(SRC_PATH)%.c
 	@mkdir -p $(BIN_PATH) || true
 	@echo -n "\t$(G)Success: "
-	$(COMPILE) $^ -o $@ $(DEPNAME) -c
+	$(COMPILE) $^ $(DEPNAME) -o $@ -c
 	@echo -n "$(N)"
 
 clean:
-	@rm -f $(BIN)
+	@rm -f $(BIN_PATH)/*.o
 
 fclean: clean
-	@rm -f libud*.a
+	@rm -f ${wildcard *.a}
 
 re: fclean all
+
+static: libud_${LIBNAME}.a extract
+	@$(eval LIB_OBJ=$(shell echo *.o))
+	@ar rc libud_${LIBNAME}.a ${BIN} ${LIB_OBJ}
+	@echo "\t$(G)Success: Static library libud_${LIBNAME}.a compiled.$(N)"
+	@ranlib libud_${LIBNAME}.a
+	@echo "\t$(G)Success: Static library libud_${LIBNAME}.a indexed.$(N)"
+	@rm *.o
+
+extract:
+	@for dep in $(ARNAME); do \
+		ar x $${dep}; \
+	done
