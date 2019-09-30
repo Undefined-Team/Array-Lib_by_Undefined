@@ -8,3 +8,4 @@ do
     echo "$lib"
 done
 gcc test.c $lib -o executable
+./executable
