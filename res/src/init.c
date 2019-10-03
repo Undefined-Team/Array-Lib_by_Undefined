@@ -16,7 +16,7 @@ ud_arr      *ud_arr_init_z(size_t type_size, size_t len)
 
     UD_UT_PROT_MALLOC(new_arr = ud_arr_init(type_size, len));
     char *val = (char*)new_arr->val;
-    while (len-- > 0) *val++ = 0;
+    ud_mem_set(val, 0, len * type_size);
     return new_arr;
 }
 
