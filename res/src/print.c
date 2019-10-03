@@ -2,7 +2,6 @@
 
 static void     ud_arr_print_get_arr_size(ud_arr *arr, size_t format_len, size_t *index_cut, size_t *total_size, size_t space, size_t *index, size_t *save_len)
 {
-    (void)save_len;
     ud_ut_count len = arr->len;
     if (len == 0)
         return ;
@@ -37,7 +36,6 @@ static void     ud_arr_print_str_add(char **dst, char *src)
 
 static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *format, size_t format_len, size_t space, size_t *save_len)
 {
-    (void)save_len;
     ud_ut_count len = arr->len;
     if (len == 0)
         return total_arr;

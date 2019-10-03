@@ -8,14 +8,14 @@
 #include <ud_memory.h>
 
 // Macro
-# define ud_arr_free(w)         ud_arr_free_r(w, 0)
-# define ud_arr_rfree(w)         ud_arr_free_r(w, -1)
-
 # define ud_arr_char_a          ud_arr
 # define ud_arr_float_a         ud_arr
 # define ud_arr_size_t_a        ud_arr
 # define ud_arr_str_a           ud_arr
 # define ud_arr_stdiz_a         ud_arr
+
+# define ud_arr_free(w)         ud_arr_free_r(w, 0)
+# define ud_arr_rfree(w)         ud_arr_free_r(w, -1)
 
 # define ud_arr_set(type, len, ...) ({ ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
 /*
@@ -62,7 +62,7 @@ void                            ud_arr_val(ud_arr *arr, size_t type_size, size_t
 ud_arr                          *ud_arr_new(size_t type_size, size_t len, void *val);
 ud_arr                          *ud_arr_init(size_t type_size, size_t len);
 ud_arr                          *ud_arr_init_z(size_t type_size, size_t len);
-ud_arr                          *ud_arr_init_val(size_t type_size, size_t len, char *set_val);
+ud_arr                          *ud_arr_init_val(size_t type_size, size_t len, void *set_val);
 ud_arr                          *ud_arr_cpy(ud_arr *src);
 size_t                          ud_arr_item_nbr(ud_arr *arr, ud_bool error_if_multiple_type, ud_bool count_ud_arr);
 ud_arr                          *ud_arr_flatten(ud_arr *src);

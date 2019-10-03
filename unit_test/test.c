@@ -42,7 +42,8 @@ int main(void)
     val[0] = ud_arr_cpy(test);
     val[1] = ud_arr_cpy(test);
     // val[2] = ud_arr_set(float, 6, 1.6, 1.7, 1.8, 1.9, 1.10, 1);
-    val[2] = ud_arr_init_z(sizeof(float), 5);
+    // float thefloat = 5;
+    val[2] = ud_arr_init_val(sizeof(float), 2, ({float thefloat = 5; &thefloat; }));
     ud_arr_print(test2, float, "%f");
 
     ud_arr_rfree(test);
