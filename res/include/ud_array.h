@@ -32,15 +32,15 @@
 */ 
 # define ud_arr_set(type, len, ...) ({ ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
 
-# define ud_arr_print(arr, format) \
-    {( \
+# define ud_arr_print(arr, type, format) \
+    ({ \
         char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); \
         char *start_total = *ud_arr_print_arr; \
         type *val = (type*)arr->val; \
         for (ud_ut_count i = 0; i < arr->len; ++i) printf(ud_arr_print_arr[i], *val++); \
         ud_ut_free(ud_arr_print_arr); \
         ud_ut_free(start_total); \
-    )}
+    })
 
 // Structures
 typedef struct                  uds_arr {

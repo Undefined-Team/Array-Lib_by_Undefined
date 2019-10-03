@@ -31,7 +31,7 @@ int main(void)
     // SHOW(float , 5);
     // int nbr = ;
 
-    // ud_arr_print(test, "%f");
+    ud_arr_print(test, float, "%f");
     ud_arr *test2 = ud_arr_cpy(test);
     // ud_arr_print(test2, "%f");
     printf("%zd\n", sizeof(float));
