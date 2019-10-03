@@ -1,0 +1,19 @@
+MACRO ud_arr_print(arr, format)
+char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format)
+char *start_total = *ud_arr_print_arr;
+type *val = (type*)arr->val
+for (ud_ut_count i = 0; i < arr->len; ++i)
+    printf(ud_arr_print_arr[i], *val++)
+pd_free(ud_arr_print_arr)
+pd_free(start_total)
+
+char **ud_arr_print_get_arr(ud_arr arr, char *format)
+{
+    size_t *index_cut[arr->len];
+    char    **real_arr = ud_malloc(siezof(char**) * arr->len)
+    total_size = ud_arr_print_get_arr_size(arr, strlen(format), index_cut);
+    total_arr = ud_malloc(sizeof(char) * total_size);
+    for (ud_ut_count i = 0; i < arr->len; ++i)
+        real_arr[i] = total_size[index_cut]
+    return real_arr;
+}
