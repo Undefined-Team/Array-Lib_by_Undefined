@@ -251,7 +251,7 @@ elif [[ "$noupdate" != "noupdate" ]] ; then
         error_print "Copy headers files from [ $location/res/include/ ] to [ $ud_lib_path/include/ ] failed"
     fi
     # Compil
-    if !(make -C "$location" LIBNAME="$target_name" DEPNAME="$make_dep_name" > /dev/null 2>&1); then
+    if !(make -C "$location" LIBNAME="$target_name" DEPNAME="$make_dep_name"); then
         error_print "Compilation failed"
     fi
     # Copy lib in main lib folder
