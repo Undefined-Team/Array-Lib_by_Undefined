@@ -7,6 +7,9 @@ ud_arr      *ud_arr_init(size_t type_size, size_t len)
     UD_UT_PROT_MALLOC(new_arr = ud_ut_malloc(sizeof(ud_arr)));
     void *val = ud_ut_malloc((type_size == 0 ? sizeof(ud_arr) : type_size) * len);
     ud_arr_val(new_arr, type_size, len, val);
+    
+    printf("%d\n", ud_mem_cmp("kiki", "kuku", 4));
+
     return new_arr;
 }
 
