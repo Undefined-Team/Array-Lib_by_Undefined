@@ -9,7 +9,7 @@ ud_arr      *ud_arr_init(size_t type_size, size_t len)
     ud_arr_val(new_arr, type_size, len, val);
     
     // printf("%d\n", ud_mem_cmp("kiki", "kuku", 4));
-
+    printf("test\n");
     return new_arr;
 }
 
