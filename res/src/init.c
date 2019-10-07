@@ -8,7 +8,7 @@ ud_arr      *ud_arr_init(size_t type_size, size_t len)
     void *val = ud_ut_malloc((type_size == 0 ? sizeof(ud_arr) : type_size) * len);
     ud_arr_val(new_arr, type_size, len, val);
     
-    printf("%d\n", ud_mem_cmp("kiki", "kuku", 4));
+    // printf("%d\n", ud_mem_cmp("kiki", "kuku", 4));
     // printf("test\n");
     return new_arr;
 }
