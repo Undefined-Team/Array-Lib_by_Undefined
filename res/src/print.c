@@ -74,6 +74,7 @@ static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *
 char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
 {
     size_t save_len = ud_arr_item_nbr(arr, true, false);
+    save_len += save_len == 0;
     size_t count = save_len;
     size_t  index_cut[save_len];
     index_cut[0] = 0;
@@ -82,7 +83,7 @@ char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
     size_t  total_size = 0;
     size_t  format_len = ud_ut_byte_len(format);
     size_t  index = 1;
-    real_arr = ud_ut_malloc(sizeof(char**) * (save_len + save_len == 0));
+    real_arr = ud_ut_malloc(sizeof(char**) * save_len);
     ud_arr_print_get_arr_size(arr, format_len, index_cut, &total_size, 0, &index, &count);
     UD_UT_PROT_MALLOC(total_arr = ud_ut_malloc(sizeof(char) * (total_size + 1)));
     total_arr[total_size] = '\0';
