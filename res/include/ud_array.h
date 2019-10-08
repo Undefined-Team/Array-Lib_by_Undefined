@@ -32,7 +32,7 @@
         type in_val[len] = {__VA_ARGS__}; \
         for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; \
         } \
-        new_arr; \
+        new_arr ? new_arr : NULL; \
     })
 
     // <<< If need to modify ud_arr_set >>>
