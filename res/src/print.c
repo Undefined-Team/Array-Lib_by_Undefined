@@ -82,7 +82,7 @@ char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
     size_t  total_size = 0;
     size_t  format_len = ud_ut_byte_len(format);
     size_t  index = 1;
-    UD_UT_PROT_MALLOC(real_arr = ud_ut_malloc(sizeof(char**) * save_len));
+    real_arr = ud_ut_malloc(sizeof(char**) * save_len);
     ud_arr_print_get_arr_size(arr, format_len, index_cut, &total_size, 0, &index, &count);
     UD_UT_PROT_MALLOC(total_arr = ud_ut_malloc(sizeof(char) * (total_size + 1)));
     total_arr[total_size] = '\0';
