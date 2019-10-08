@@ -18,7 +18,7 @@
 # define ud_arr_rfree(w)         ud_arr_free_r(w, -1)
 
 // # define ud_arr_set(type, len, ...) ({ ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
-# define ud_arr_set(type, ...) ({ size_t len = 0; len = UD_ARGS_LEN(type, __VA_ARGS__); ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
+# define ud_arr_set(type, ...) ({ size_t len = UD_ARGS_LEN(type, __VA_ARGS__); ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
 /*
 # define ud_arr_set(type, ...) \
     ({ \
