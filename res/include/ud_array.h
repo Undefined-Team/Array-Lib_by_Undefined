@@ -32,7 +32,8 @@
     // <<< If need to modify ud_arr_set >>>
 */ 
 
-# define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i, ++val) printf(ud_arr_print_arr[i], *val); ud_arr_rfree(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
+// # define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i, ++val) printf(ud_arr_print_arr[i], *val); ud_arr_rfree(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
+# define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i, ++val) printf("%s", ud_arr_print_arr[i]); ud_arr_rfree(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
 /*
 # define ud_arr_print(arr, type, format) \
     ({ \
