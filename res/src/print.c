@@ -3,8 +3,6 @@
 static void     ud_arr_print_get_arr_size(ud_arr *arr, size_t format_len, size_t *index_cut, size_t *total_size, size_t space, size_t *index, size_t *save_len)
 {
     ud_ut_count len = arr->len;
-    // if (len == 0)
-        // return ;
     if (arr->type_s != 0)
     {
         *total_size += space * UD_UT_SPACE_NBR + ud_ut_byte_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 2;
@@ -36,8 +34,6 @@ static void     ud_arr_print_str_add(char **dst, char *src)
 static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *format, size_t format_len, size_t space, size_t *save_len)
 {
     ud_ut_count len = arr->len;
-    // if (len == 0)
-        // return total_arr;
     if (arr->type_s != 0)
     {
         for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_arr_print_str_add(&total_arr, " ");
