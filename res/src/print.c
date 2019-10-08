@@ -86,6 +86,7 @@ char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
     real_arr = ud_ut_malloc(sizeof(char**) * save_len);
     ud_arr_print_get_arr_size(arr, format_len, index_cut, &total_size, 0, &index, &count);
     UD_UT_PROT_MALLOC(total_arr = ud_ut_malloc(sizeof(char) * (total_size + 1)));
+    printf("total size = %zd\n", total_size);
     total_arr[total_size] = '\0';
     count = save_len;
     (void)ud_arr_print_get_total_arr(arr, total_arr, format, format_len, 0, &count);
