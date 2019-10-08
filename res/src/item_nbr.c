@@ -7,7 +7,7 @@ static size_t   ud_arr_item_nbr_ctr(ud_arr *arr, size_t *norm_type_size, ud_bool
     {
         if (*norm_type_size == 0) *norm_type_size = arr->type_s;
         else if (error_if_multiple_type && *norm_type_size != arr->type_s) ud_ut_error("All sub array must have the same type or type_size");
-        return arr->len;
+        return arr->len == 0 ? 1 : arr->len;
     }
     ud_ut_count count = 0;
     ud_arr **val = (ud_arr**)arr->val;
