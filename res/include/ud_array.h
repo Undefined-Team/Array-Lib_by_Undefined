@@ -25,7 +25,7 @@
     ({ \
         size_t len = UD_ARGS_LEN(type, __VA_ARGS__); \
         ud_arr *new_arr; \
-        if (!len) { new_arr = ud_arr_init(sizeof(type), 1) } \
+        if (!len) { new_arr = ud_arr_init(sizeof(type), 1); } \
         else { \
         new_arr = ud_arr_init(sizeof(type), len); \
         type *val = (type*)new_arr->val; \
