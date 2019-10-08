@@ -24,7 +24,7 @@
 # define ud_arr_set(type, ...) \
     ({ \
         size_t len = UD_ARGS_LEN(type, __VA_ARGS__); \
-        ud_arr *new_arr; \
+        ud_arr *new_arr = NULL; \
         if (!len) { new_arr = ud_arr_init(sizeof(type), 1); } \
         else { \
         new_arr = ud_arr_init(sizeof(type), len); \
