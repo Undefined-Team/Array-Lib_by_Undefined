@@ -3,8 +3,8 @@
 static size_t   ud_arr_item_nbr_ctr(ud_arr *arr, size_t *norm_type_size, ud_bool error_if_multiple_type, ud_bool count_ud_arr)
 {
     ud_ut_count len = arr->len;
-    if (len == 0)
-        return 0;
+    // if (len == 0)
+        // return 0;
     else if (arr->type_s != 0)
     {
         if (*norm_type_size == 0) *norm_type_size = arr->type_s;
