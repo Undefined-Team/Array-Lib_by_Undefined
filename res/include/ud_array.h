@@ -24,7 +24,7 @@
     ({ \
         ud_arr *new_arr; \
         type in_val[UD_ARGS_LEN(type, __VA_ARGS__)] = {__VA_ARGS__}; \
-        printf("add set = %p\n", in_val[0]);
+        printf("add set = %p\n", in_val[0]); \
         size_t len = sizeof(in_val) / sizeof(type); \
         new_arr = ud_arr_init(sizeof(type), len); \
         type *val = (type*)new_arr->val; \
