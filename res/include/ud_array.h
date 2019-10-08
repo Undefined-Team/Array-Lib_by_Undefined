@@ -17,23 +17,26 @@
 # define ud_arr_free(w)         ud_arr_free_r(w, 0)
 # define ud_arr_rfree(w)         ud_arr_free_r(w, -1)
 
-# define ud_arr_set(type, ...) ({ size_t len = UD_ARGS_LEN(type, __VA_ARGS__); ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
+// # define ud_arr_set(type, ...) ({ size_t len = UD_ARGS_LEN(type, __VA_ARGS__); ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
 // # define ud_arr_set(type, len, ...) ({ ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
 // # define ud_arr_set(type, ...) ({ size_t len = UD_ARGS_LEN(type, __VA_ARGS__); ud_arr *new_arr; new_arr = ud_arr_init(sizeof(type), len); type *val = (type*)new_arr->val; type in_val[len] = {__VA_ARGS__}; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
-/*
+
 # define ud_arr_set(type, ...) \
     ({ \
         size_t len = UD_ARGS_LEN(type, __VA_ARGS__); \
         ud_arr *new_arr; \
+        if (!len) { new_arr = ud_arr_init(sizeof(type), 1) } \
+        else { \
         new_arr = ud_arr_init(sizeof(type), len); \
         type *val = (type*)new_arr->val; \
         type in_val[len] = {__VA_ARGS__}; \
         for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; \
+        } \
         new_arr; \
     })
 
     // <<< If need to modify ud_arr_set >>>
-*/ 
+
 
 # define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i, ++val) printf(ud_arr_print_arr[i], *val); ud_arr_rfree(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
 /*
