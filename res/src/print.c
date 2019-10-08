@@ -88,7 +88,8 @@ char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
     total_arr[total_size] = '\0';
     count = save_len;
     (void)ud_arr_print_get_total_arr(arr, total_arr, format, format_len, 0, &count);
-    for (ud_ut_count i = 0; i < save_len; ++i)
+    real_arr[0] = &total_arr[index_cut[0]];
+    for (ud_ut_count i = 1; i < save_len; ++i)
         real_arr[i] = &total_arr[index_cut[i]];
     return real_arr;
 }
