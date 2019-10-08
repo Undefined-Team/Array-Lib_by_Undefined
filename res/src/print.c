@@ -12,7 +12,6 @@ static void     ud_arr_print_get_arr_size(ud_arr *arr, size_t format_len, size_t
         {
             *total_size += format_len + ((*save_len)-- > 1);
             index_cut[(*index)++] = *total_size;
-            *total_size += (len > 0) + 1;
         }
         *total_size += ud_ut_byte_len(UD_UT_COLOR_N) + 2;
     }
@@ -48,8 +47,6 @@ static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *
         {
             ud_arr_print_str_add(&total_arr, format);
             if ((*save_len)-- > 1) *total_arr++ = '\0';
-            if (len > 0) ud_arr_print_str_add(&total_arr, ",");
-            ud_arr_print_str_add(&total_arr, " ");
         }
         ud_arr_print_str_add(&total_arr, "]");
         ud_arr_print_str_add(&total_arr, UD_UT_COLOR_N);
