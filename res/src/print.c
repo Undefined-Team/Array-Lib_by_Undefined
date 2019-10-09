@@ -5,22 +5,22 @@ static void     ud_arr_print_get_arr_size(ud_arr *arr, size_t format_len, size_t
     ud_ut_count len = arr->len;
     if (arr->type_s != 0)
     {
-        *total_size += space * UD_UT_SPACE_NBR + ud_ut_byte_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 2;
+        *total_size += space * UD_UT_SPACE_NBR + ud_str_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 2;
         while (len-- > 0)
         {
             *total_size += format_len + ((*save_len)-- > 1);
             index_cut[(*index)++] = *total_size;
         }
-        *total_size += ud_ut_byte_len(UD_UT_COLOR_N) + 3;
+        *total_size += ud_str_len(UD_UT_COLOR_N) + 3;
     }
     else
     {
         *total_size += space * UD_UT_SPACE_NBR;
-        *total_size += ud_ut_byte_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 3 + ud_ut_int_len(space) + ud_ut_byte_len(UD_UT_COLOR_N);
+        *total_size += ud_str_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 3 + ud_math_int_len(space) + ud_str_len(UD_UT_COLOR_N);
         ud_arr **val = (ud_arr**)arr->val;
         while (len-- > 0) ud_arr_print_get_arr_size(*val++, format_len, index_cut, total_size, space + 1, index, save_len);
         *total_size += space * UD_UT_SPACE_NBR;
-        *total_size += ud_ut_byte_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 2 + ud_ut_byte_len(UD_UT_COLOR_N);
+        *total_size += ud_str_len(ud_ut_color_t[space % UD_UT_COLOR_NBR]) + 2 + ud_str_len(UD_UT_COLOR_N);
     }
 }
 
@@ -54,7 +54,7 @@ static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *
         ud_arr_print_str_add(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
         ud_arr_print_str_add(&total_arr, "[ ");
         char *space_itoa;
-        UD_UT_PROT_MALLOC(space_itoa = ud_ut_malloc(sizeof(char) * (ud_ut_int_len(space) + 1)));
+        UD_UT_PROT_MALLOC(space_itoa = ud_ut_malloc(sizeof(char) * (ud_math_int_len(space) + 1)));
         sprintf(space_itoa, "%zd", space);
         ud_arr_print_str_add(&total_arr, space_itoa);
         ud_ut_free(space_itoa);
@@ -80,7 +80,7 @@ char            **ud_arr_print_get_arr(ud_arr *arr, char *format)
     char    **real_arr = NULL;
     char    *total_arr;
     size_t  total_size = 0;
-    size_t  format_len = ud_ut_byte_len(format);
+    size_t  format_len = ud_str_len(format);
     size_t  index = 1;
     real_arr = ud_ut_malloc(sizeof(char**) * save_len);
     ud_arr_print_get_arr_size(arr, format_len, index_cut, &total_size, 0, &index, &count);
