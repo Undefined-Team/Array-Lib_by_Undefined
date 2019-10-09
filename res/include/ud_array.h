@@ -6,6 +6,8 @@
 #include <stdarg.h>
 #include <ud_utils.h>
 #include <ud_memory.h>
+#include <ud_math.h>
+#include <ud_string.h>
 
 // Macro
 # define ud_arr_char_a          ud_arr
