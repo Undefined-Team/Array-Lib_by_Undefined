@@ -70,5 +70,7 @@ size_t                          ud_arr_item_nbr(ud_arr *arr, ud_bool error_if_mu
 ud_arr                          *ud_arr_flatten(ud_arr *src);
 void                            ud_arr_free_r(ud_arr *arr, int depth);
 char                            **ud_arr_print_get_arr(ud_arr *arr, char *format);
+void                            ud_arr_rm_idx(ud_arr *arr, size_t index, ud_bool free_elem);
+void                            ud_arr_rm_adr(ud_arr *arr, void *adr, ud_bool free_elem);
 
 #endif
