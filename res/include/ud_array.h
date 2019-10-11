@@ -19,7 +19,7 @@
 # define ud_arr_ofree(w)        ud_arr_free_r(w, 0)
 
 // # define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
-# define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; type *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i) *val++ = *in_val++; new_arr; })
+# define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; type *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_val) *val = *in_val; new_arr; })
 /*
 # define ud_arr_set(type, ...) \
     ({ \
@@ -37,7 +37,7 @@
 */ 
 
 // # define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i, ++val) printf(ud_arr_print_arr[i], *val); ud_arr_free(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
-# define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; char **ud_arr_print_tmp = ud_arr_print_arrud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i) printf(*ud_arr_print_tmp++, *val++); ud_arr_free(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
+# define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; char **ud_arr_print_tmp = ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i) printf(*ud_arr_print_tmp++, *val++); ud_arr_free(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
 /*
 # define ud_arr_print(arr, type, format) \
     ({ \
