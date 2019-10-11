@@ -19,7 +19,7 @@
 # define ud_arr_ofree(w)        ud_arr_free_r(w, 0)
 
 // # define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
-# define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; type *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_val) *val = *in_val; new_arr; })
+# define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; type *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_val) *val = *in_tmp; new_arr; })
 /*
 # define ud_arr_set(type, ...) \
     ({ \
