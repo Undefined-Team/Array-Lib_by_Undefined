@@ -24,49 +24,42 @@ static void     ud_arr_print_get_arr_size(ud_arr *arr, size_t format_len, size_t
     }
 }
 
-static void     ud_arr_print_str_add(char **dst, char *src)
-{
-    char *tmp = *dst;
-    while (*src) *tmp++ = *src++;
-    *dst = tmp;
-}
-
 static char     *ud_arr_print_get_total_arr(ud_arr *arr, char *total_arr, char *format, size_t format_len, size_t space, size_t *save_len)
 {
     ud_ut_count len = arr->len;
     if (arr->type_s != 0)
     {
-        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_arr_print_str_add(&total_arr, " ");
-        ud_arr_print_str_add(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
-        ud_arr_print_str_add(&total_arr, "[ ");
+        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_str_cpy_rd(&total_arr, " ");
+        ud_str_cpy_rd(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
+        ud_str_cpy_rd(&total_arr, "[ ");
         while (len-- > 0)
         {
-            ud_arr_print_str_add(&total_arr, format);
+            ud_str_cpy_rd(&total_arr, format);
             if ((*save_len)-- > 1) *total_arr++ = '\0';
         }
-        ud_arr_print_str_add(&total_arr, " ]");
-        ud_arr_print_str_add(&total_arr, UD_UT_COLOR_N);
-        ud_arr_print_str_add(&total_arr, "\n");
+        ud_str_cpy_rd(&total_arr, " ]");
+        ud_str_cpy_rd(&total_arr, UD_UT_COLOR_N);
+        ud_str_cpy_rd(&total_arr, "\n");
     }
     else
     {
-        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_arr_print_str_add(&total_arr, " ");
-        ud_arr_print_str_add(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
-        ud_arr_print_str_add(&total_arr, "[ ");
+        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_str_cpy_rd(&total_arr, " ");
+        ud_str_cpy_rd(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
+        ud_str_cpy_rd(&total_arr, "[ ");
         char *space_itoa;
         UD_UT_PROT_MALLOC(space_itoa = ud_ut_malloc(sizeof(char) * (ud_math_int_len(space) + 1)));
         sprintf(space_itoa, "%zd", space);
-        ud_arr_print_str_add(&total_arr, space_itoa);
+        ud_str_cpy_rd(&total_arr, space_itoa);
         ud_ut_free(space_itoa);
-        ud_arr_print_str_add(&total_arr, UD_UT_COLOR_N);
-        ud_arr_print_str_add(&total_arr, "\n");
+        ud_str_cpy_rd(&total_arr, UD_UT_COLOR_N);
+        ud_str_cpy_rd(&total_arr, "\n");
         ud_arr **val = (ud_arr**)arr->val;
         while (len-- > 0) total_arr = ud_arr_print_get_total_arr(*val++, total_arr, format, format_len, space + 1, save_len);
-        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_arr_print_str_add(&total_arr, " ");
-        ud_arr_print_str_add(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
-        ud_arr_print_str_add(&total_arr, "]");
-        ud_arr_print_str_add(&total_arr, UD_UT_COLOR_N);
-        ud_arr_print_str_add(&total_arr, "\n");
+        for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) ud_str_cpy_rd(&total_arr, " ");
+        ud_str_cpy_rd(&total_arr, ud_ut_color_t[space % UD_UT_COLOR_NBR]);
+        ud_str_cpy_rd(&total_arr, "]");
+        ud_str_cpy_rd(&total_arr, UD_UT_COLOR_N);
+        ud_str_cpy_rd(&total_arr, "\n");
     }
     return total_arr;
 }
