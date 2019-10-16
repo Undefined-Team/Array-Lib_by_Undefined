@@ -22,7 +22,7 @@ void    ud_arr_rm_idx(ud_arr *arr, size_t index, ud_bool free_elem)
     for (ud_ut_count i = 0; i < len; ++i)
     {
         if (i != index)
-            ud_mem_cpy_rds((void**)&new_arr_val_tmp, (void**)&arr_val, type_size);
+            ud_mem_cpy_rds(new_arr_val_tmp, arr_val, type_size);
         else
             ud_arr_rm_found(arr, type_size, &arr_val, free_elem);
     }
@@ -41,7 +41,7 @@ void    ud_arr_rm_adr(ud_arr *arr, void *adr, ud_bool free_elem)
     for (ud_ut_count i = 0; i < len; ++i)
     {
         if (adr != arr_val)
-            ud_mem_cpy_rds((void**)&new_arr_val_tmp, (void**)&arr_val, type_size);
+            ud_mem_cpy_rds(new_arr_val_tmp, arr_val, type_size);
         else
             ud_arr_rm_found(arr, type_size, &arr_val, free_elem);
     }
@@ -54,7 +54,7 @@ void    ud_arr_rm_adr(ud_arr *arr, void *adr, ud_bool free_elem)
             return ;
         }
     }
-    else ud_mem_cpy_rds((void**)&new_arr_val_tmp, (void**)&arr_val, type_size);
+    else ud_mem_cpy_rds(new_arr_val_tmp, arr_val, type_size);
     ud_ut_free(arr->val);
     arr->val = new_arr_val;
 }
