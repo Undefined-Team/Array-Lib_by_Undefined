@@ -70,13 +70,12 @@ void ud_arr_type_pffree_ud_arr(void *val, ...)
     ud_arr_free((ud_arr*)val);
 }
 
-static ud_arr_type *ud_arr_type_new(char *type_name, size_t type_size, size_t type_index, void (*fp_print)(void *val, ...), void (*fp_free)(void *val, ...))
+static ud_arr_type *ud_arr_type_new(char *type_name, size_t type_size, void (*fp_print)(void *val, ...), void (*fp_free)(void *val, ...))
 {
     ud_arr_type *new;
     UD_UT_PROT_MALLOC(new = ud_ut_malloc(sizeof(ud_arr_type)));
     new->name  = type_name;
     new->size  = type_size;
-    new->index = type_index;
     new->fp_print = fp_print;
     new->fp_free = fp_free;
     new->next = NULL;
@@ -91,7 +90,7 @@ static ud_arr_type *ud_arr_type_init(ud_arr_type *begin)
     void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_pfprint_char, &ud_arr_type_pfprint_unsigned_char, &ud_arr_type_pfprint_short, &ud_arr_type_pfprint_unsigned_short, &ud_arr_type_pfprint_int, &ud_arr_type_pfprint_unsigned_int, &ud_arr_type_pfprint_long, &ud_arr_type_pfprint_unsigned_long, &ud_arr_type_pfprint_long_long, &ud_arr_type_pfprint_unsigned_long_long, &ud_arr_type_pfprint_float, &ud_arr_type_pfprint_double, &ud_arr_type_pfprint_long_double};
     for (ud_ut_count i = 0; i < total; ++i)
     {
-        begin->next = ud_arr_type_new(base_type_name[i], base_type_size[i], i + 1, base_type_fp_print[i], NULL);
+        begin->next = ud_arr_type_new(base_type_name[i], base_type_size[i], base_type_fp_print[i], NULL);
         begin = begin->next;
     }
     return begin;
@@ -117,7 +116,7 @@ ud_arr_type         *ud_arr_type_ctr(char *type_name, size_t type_size, ud_arr_t
     if (req == ud_arr_req_free) return ud_arr_type_free_ctr(begin); 
     if (!begin)
     {
-        begin = ud_arr_type_new("ud_arr*", sizeof(ud_arr*), 0, NULL, &ud_arr_type_pffree_ud_arr);
+        begin = ud_arr_type_new("ud_arr*", sizeof(ud_arr*), NULL, &ud_arr_type_pffree_ud_arr);
         end = ud_arr_type_init(begin);
     }
     if (req == ud_arr_req_search)
@@ -127,7 +126,7 @@ ud_arr_type         *ud_arr_type_ctr(char *type_name, size_t type_size, ud_arr_t
             if (!ud_str_cmp(tmp->name, type_name)) return tmp;
         return NULL;
     }
-    end->next = ud_arr_type_new(type_name, type_size, end->index + 1, NULL, NULL);
+    end->next = ud_arr_type_new(type_name, type_size, NULL, NULL);
     end = end->next;
     return end;
 }

@@ -72,7 +72,6 @@ typedef enum                    {ud_arr_req_add,ud_arr_req_search,ud_arr_req_fre
 typedef struct                  uds_arr_type {
     char                        *name;
     size_t                      size;
-    size_t                      index;
     void                        (*fp_print)(void *val, ...);
     void                        (*fp_free)(void *val, ...);
     struct uds_arr_type         *next;

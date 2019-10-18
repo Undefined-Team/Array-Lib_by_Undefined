@@ -2,7 +2,7 @@
 
 void        ud_arr_free_r(ud_arr *arr, int depth)
 {
-    if (arr->type->index == 0 && (depth > 0 || depth == -1))
+    if (arr->type == ud_arr_type_arr() && (depth > 0 || depth == -1))
     {
         ud_arr **val = (ud_arr**)arr->val;
         ud_ut_count len = arr->len;

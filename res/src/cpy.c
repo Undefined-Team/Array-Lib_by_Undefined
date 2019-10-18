@@ -5,7 +5,7 @@ ud_arr      *ud_arr_cpy(ud_arr *src)
     ud_arr *dst;
 
     UD_UT_PROT_MALLOC(dst = ud_arr_tinit(src->type, src->len));
-    if (dst->type->index == 0)
+    if (dst->type == ud_arr_type_arr())
     {
         ud_arr **dst_val = (ud_arr**)dst->val;
         ud_arr **src_val = (ud_arr**)src->val;

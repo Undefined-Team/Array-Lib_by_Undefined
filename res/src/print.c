@@ -3,7 +3,7 @@
 void        ud_arr_print_ctr(ud_arr *arr, size_t space)
 {
     ud_ut_count len = arr->len;
-    if (arr->type->index != 0)
+    if (arr->type != ud_arr_type_arr())
     {
         for (ud_ut_count i = 0; i < space * UD_UT_SPACE_NBR; i++) printf(" ");
         printf("%s[ ", ud_ut_color_t[space % UD_UT_COLOR_NBR]);
