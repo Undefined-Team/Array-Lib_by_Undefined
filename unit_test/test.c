@@ -90,7 +90,7 @@ int main(void)
     ud_arr *cpymain = ud_arr_cpy(mainv);
     ud_arr_print(cpymain);
     ud_arr_free(cpymain);
-    printf("before rm %zd %zd\n", mainv->len, mainv->type->index);
+    printf("before rm %zd\n", mainv->len);
     // ud_arr_rm_idx(mainv, 0, false);
     ud_arr **testadr = &(((ud_arr**)mainv->val)[1]);
     ud_arr_rm_adr(mainv, testadr, true);
