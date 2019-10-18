@@ -49,6 +49,7 @@
 # define ud_arr_init_val(ctype, len, set_val)               ud_arr_tinit_val(ud_arr_type_get(ctype), len, set_val)
 
 # define ud_arr_set(ctype, ...) ({ ud_arr *new_arr; ctype in_val[] = {__VA_ARGS__}; ctype *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(ctype); new_arr = ud_arr_init(ctype, len); ctype *val = (ctype*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; })
+# define ud_arr_tset(ctype, type, ...) ({ ud_arr *new_arr; ctype in_val[] = {__VA_ARGS__}; ctype *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(ctype); new_arr = ud_arr_tinit(type, len); ctype *val = (ctype*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; })
 /*
 # define ud_arr_set(ctype, ...) \
     ({ \
