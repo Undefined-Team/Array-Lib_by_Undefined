@@ -10,24 +10,54 @@
 #include <ud_string.h>
 
 // Macro
-# define ud_arr_char_a          ud_arr
-# define ud_arr_float_a         ud_arr
-# define ud_arr_size_t_a        ud_arr
-# define ud_arr_str_a           ud_arr
-
-# define ud_arr_free(w)         ud_arr_free_r(w, -1)
-# define ud_arr_ofree(w)        ud_arr_free_r(w, 0)
-
-# define ud_arr_set(type, ...) ({ ud_arr *new_arr; type in_val[] = {__VA_ARGS__}; size_t len = sizeof(in_val) / sizeof(type); new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); type *val = (type*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i) val[i] = in_val[i]; new_arr; })
+# define UD_ARR_TYPE_INIT_FP_PRINT(format_str, ctype) ({ va_list ap; va_start(ap, val); void *fp_print = va_arg(ap,void*); static char *format = format_str ; if (fp_print) format = fp_print; else printf(format, *(ctype*)val); va_end(ap); })
 /*
-# define ud_arr_set(type, ...) \
+# define UD_ARR_TYPE_INIT_FP_PRINT(format_str, ctype) \
+    ({ \
+        va_list ap; \
+        va_start(ap, val); \
+        void *fp_print = va_arg(ap,void*); \
+        static char *format = format_str ; \
+        if (fp_print) format = fp_print; else printf(format, *(ctype*)val); \
+        va_end(ap); \
+    })
+
+    // <<< If need to modify UD_ARR_TYPE_INIT_FP_PRINT >>>
+*/ 
+
+# define ud_arr_type_get(ctype)                             ud_arr_type_get_ctr(#ctype, sizeof(ctype))
+# define ud_arr_type_add(type, type_size)                   ud_arr_type_ctr(type, type_size, ud_arr_req_add)
+# define ud_arr_type_search(type)                           ud_arr_type_ctr(type, 0, ud_arr_req_search)
+# define ud_arr_type_set_fp_print(ctype, fpprint)           ({ ud_arr_type *tmp = ud_arr_type_get(ctype); tmp->fp_print = &fpprint; })
+# define ud_arr_type_set_fp_free(ctype, fpfree)             ({ ud_arr_type *tmp = ud_arr_type_get(ctype); tmp->fp_free = &fpfree; })
+# define ud_arr_type_set_fp_all(ctype, fpprint, fpfree)     ({ ud_arr_type *tmp = ud_arr_type_get(ctype); tmp->fp_print = &fpprint; tmp->fp_free = &fpfree; })
+# define ud_arr_type_free()                                 (void)ud_arr_type_ctr(NULL, 0, ud_arr_req_free);
+
+# define ud_arr_char_a                                      ud_arr
+# define ud_arr_float_a                                     ud_arr
+# define ud_arr_size_t_a                                    ud_arr
+# define ud_arr_str_a                                       ud_arr
+
+# define ud_arr_print(arr)                                  ud_arr_print_ctr(arr, 0)
+# define ud_arr_free(w)                                     ud_arr_free_r(w, -1)
+# define ud_arr_ofree(w)                                    ud_arr_free_r(w, 0)
+
+# define ud_arr_val(arr, ctype, len, val)                   ud_arr_tval(arr, ud_arr_type_get(ctype), len, val)
+# define ud_arr_new(ctype, len, val)                        ud_arr_tnew(ud_arr_type_get(ctype), len, val)
+# define ud_arr_init(ctype, len)                            ud_arr_tinit(ud_arr_type_get(ctype), len)
+# define ud_arr_init_z(ctype, len)                          ud_arr_tinit_z(ud_arr_type_get(ctype), len)
+# define ud_arr_init_val(ctype, len, set_val)               ud_arr_tinit_val(ud_arr_type_get(ctype), len, set_val)
+
+# define ud_arr_set(ctype, ...) ({ ud_arr *new_arr; ctype in_val[] = {__VA_ARGS__}; ctype *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(ctype); new_arr = ud_arr_init(ctype, len); ctype *val = (ctype*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; })
+/*
+# define ud_arr_set(ctype, ...) \
     ({ \
         ud_arr *new_arr; \
-        type in_val[] = {__VA_ARGS__}; \
-        type *in_tmp = in_val; \
-        size_t len = sizeof(in_val) / sizeof(type); \
-        new_arr = ud_arr_init(!ud_str_cmp(#type, "ud_arr*") ? 0 : sizeof(type), len); \
-        type *val = (type*)new_arr->val; \
+        ctype in_val[] = {__VA_ARGS__}; \
+        ctype *in_tmp = in_val; \
+        size_t len = sizeof(in_val) / sizeof(ctype); \
+        new_arr = ud_arr_init(ctype, len) \
+        ctype *val = (ctype*)new_arr->val; \
         for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; \
         new_arr; \
     })
@@ -35,43 +65,34 @@
     // <<< If need to modify ud_arr_set >>>
 */ 
 
-# define ud_arr_print(arr, type, format) ({ char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); char *start_total = NULL; if (ud_arr_print_arr) start_total = *ud_arr_print_arr; char **ud_arr_print_tmp = ud_arr_print_arr; ud_arr *flattened = ud_arr_flatten(arr); type *val = (type*)flattened->val; for (ud_ut_count i = 0; i < flattened->len; ++i) printf(*ud_arr_print_tmp++, *val++); ud_arr_free(flattened); ud_ut_free(ud_arr_print_arr); ud_ut_free(start_total); })
-/*
-# define ud_arr_print(arr, type, format) \
-    ({ \
-        char **ud_arr_print_arr = ud_arr_print_get_arr(arr, format); \
-        char *start_total = NULL; \
-        if (ud_arr_print_arr) start_total = *ud_arr_print_arr; \
-        char **ud_arr_print_tmp = ud_arr_print_arr;
-        ud_arr *flattened = ud_arr_flatten(arr); \
-        type *val = (type*)flattened->val; \
-        for (ud_ut_count i = 0; i < flattened->len; ++i) printf(*ud_arr_print_tmp++, *val++); \
-        ud_arr_free(flattened); \
-        ud_ut_free(ud_arr_print_arr); \
-        ud_ut_free(start_total); \
-    })
-
-    // <<< If need to modify ud_arr_print >>>
-*/
-
 // Structures
+typedef enum                    {ud_arr_req_add,ud_arr_req_search,ud_arr_req_free} ud_arr_type_req; 
+
+typedef struct                  uds_arr_type {
+    char                        *name;
+    size_t                      size;
+    size_t                      index;
+    void                        (*fp_print)(void *val, ...);
+    void                        (*fp_free)(void *val, ...);
+    struct uds_arr_type         *next;
+}                               ud_arr_type;
+
 typedef struct                  uds_arr {
     void                        *val;
     size_t                      len;
-    size_t                      type_s;
+    ud_arr_type                 *type;
 }                               ud_arr;
 
 // Prototypes
-void                            ud_arr_val(ud_arr *arr, size_t type_size, size_t len, void *val);
-ud_arr                          *ud_arr_new(size_t type_size, size_t len, void *val);
-ud_arr                          *ud_arr_init(size_t type_size, size_t len);
-ud_arr                          *ud_arr_init_z(size_t type_size, size_t len);
-ud_arr                          *ud_arr_init_val(size_t type_size, size_t len, void *set_val);
+ud_arr_type                     *ud_arr_type_get_ctr(char *type_name, size_t type_size);
+void                            ud_arr_tval(ud_arr *arr, ud_arr_type *type, size_t len, void *val);
+ud_arr                          *ud_arr_tnew(ud_arr_type *type, size_t len, void *val);
+ud_arr                          *ud_arr_tinit(ud_arr_type *type, size_t len);
+ud_arr                          *ud_arr_tinit_z(ud_arr_type *type, size_t len);
+ud_arr                          *ud_arr_tinit_val(ud_arr_type *type, size_t len, void *set_val);
 ud_arr                          *ud_arr_cpy(ud_arr *src);
-size_t                          ud_arr_item_nbr(ud_arr *arr, ud_bool error_if_multiple_type, ud_bool count_ud_arr);
-ud_arr                          *ud_arr_flatten(ud_arr *src);
 void                            ud_arr_free_r(ud_arr *arr, int depth);
-char                            **ud_arr_print_get_arr(ud_arr *arr, char *format);
+void                            ud_arr_print_ctr(ud_arr *arr, size_t space);
 void                            ud_arr_rm_idx(ud_arr *arr, size_t index, ud_bool free_elem);
 void                            ud_arr_rm_adr(ud_arr *arr, void *adr, ud_bool free_elem);
 

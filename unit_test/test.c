@@ -17,6 +17,12 @@
 
 // #define SHOW(T,V) do { T x = V; print_bits(#T, #V, (unsigned char*) &x, sizeof(x)); } while(0)
 
+void test_new_type_pf_char(void *val, ...)
+{
+    // (void)pformat;
+    printf("<%c>", *(char*)val);
+}
+
 int main(void)
 {
     // ud_arr *test = ud_arr_init_z(sizeof(int), 5);
@@ -57,22 +63,43 @@ int main(void)
     // printf("\n%zd %zd\n", test2->len, test2->type_s);
 
     // ud_arr_print(test2, float, "%f");
-    ud_arr *main_test = ud_arr_set(ud_arr*,
-                            ud_arr_set(float, 1, 2),
-                            ud_arr_set(ud_arr*, 
-                                ud_arr_set(float, 3, 4), ud_arr_set(float, 5, 6)));
-    ud_arr_print(main_test, float, "%f ");
+    // ud_arr *main_test = ud_arr_set(ud_arr*,
+    //                         ud_arr_set(float, 1, 2),
+    //                         ud_arr_set(ud_arr*, 
+    //                             ud_arr_set(float, 3, 4), ud_arr_set(float, 5, 6)));
+    // ud_arr_print(main_test, float, "%f ");
     
-    printf("\nTry delete\n\n");
+    // printf("\nTry delete\n\n");
+    // // printf("%zd\n", ((ud_arr**)main_test->val)[0]->type_s);
+
+    // // ud_arr_rm_idx(main_test, 0, true);
+    // ud_arr **test_adr = &(((ud_arr**)main_test->val)[0]);
+    // ud_arr_rm_adr(main_test, test_adr, true);
+
+    // printf("\nTry printf\n\n");
     // printf("%zd\n", ((ud_arr**)main_test->val)[0]->type_s);
+    // ud_arr_print(main_test, float, "%f ");
+    // ud_arr_free(main_test);
 
-    // ud_arr_rm_idx(main_test, 0, true);
-    ud_arr **test_adr = &(((ud_arr**)main_test->val)[0]);
-    ud_arr_rm_adr(main_test, test_adr, true);
+    ud_arr_type_set_fp_print(char, test_new_type_pf_char);
 
-    printf("\nTry printf\n\n");
-    printf("%zd\n", ((ud_arr**)main_test->val)[0]->type_s);
-    ud_arr_print(main_test, float, "%f ");
-    ud_arr_free(main_test);
+    ud_arr *test = ud_arr_set(float, 2.5, 2.4);
+    ud_arr *str = ud_arr_set(char, 'c', 'a');
+    ud_arr *mainv = ud_arr_set(ud_arr*, test, str);
+
+    ud_arr *cpymain = ud_arr_cpy(mainv);
+    ud_arr_print(cpymain);
+    ud_arr_free(cpymain);
+    printf("before rm %zd %zd\n", mainv->len, mainv->type->index);
+    // ud_arr_rm_idx(mainv, 0, false);
+    ud_arr **testadr = &(((ud_arr**)mainv->val)[1]);
+    ud_arr_rm_adr(mainv, testadr, true);
+    float *nbr = &(*(float*)test->val);
+    ud_arr_rm_adr(test, nbr, true);
+    printf("before print\n");
+    ud_arr_print(mainv);
+    printf("before free %zd\n", mainv->len);
+    ud_arr_free(mainv);
+    ud_arr_type_free();
     return (0);
 }
