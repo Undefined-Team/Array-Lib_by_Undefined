@@ -30,6 +30,11 @@ void ud_arr_type_pfprint_unsigned_int(void *val, ...)
     UD_ARR_TYPE_INIT_FP_PRINT("%u, ", unsigned int);
 }
 
+void ud_arr_type_pfprint_size_t(void *val, ...)
+{
+    UD_ARR_TYPE_INIT_FP_PRINT("%zu, ", unsigned int);
+}
+
 void ud_arr_type_pfprint_long(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%ld, ", long);
@@ -85,9 +90,9 @@ static ud_arr_type *ud_arr_type_new(char *type_name, size_t type_size, void (*fp
 static ud_arr_type *ud_arr_type_init(ud_arr_type *begin)
 {
     size_t total = 13;
-    char *base_type_name[] = {"char", "unsigned char", "short", "unsigned short", "int", "unsigned int", "long", "unsigned long", "long long", "unsigned long long", "float", "double", "long double"};
-    size_t base_type_size[] = {sizeof(char), sizeof(unsigned char), sizeof(short), sizeof(unsigned short), sizeof(int), sizeof(unsigned int), sizeof(long), sizeof(unsigned long), sizeof(long long), sizeof(unsigned long long), sizeof(float), sizeof(double), sizeof(long double)};
-    void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_pfprint_char, &ud_arr_type_pfprint_unsigned_char, &ud_arr_type_pfprint_short, &ud_arr_type_pfprint_unsigned_short, &ud_arr_type_pfprint_int, &ud_arr_type_pfprint_unsigned_int, &ud_arr_type_pfprint_long, &ud_arr_type_pfprint_unsigned_long, &ud_arr_type_pfprint_long_long, &ud_arr_type_pfprint_unsigned_long_long, &ud_arr_type_pfprint_float, &ud_arr_type_pfprint_double, &ud_arr_type_pfprint_long_double};
+    char *base_type_name[] = {"char", "unsigned char", "short", "unsigned short", "int", "unsigned int", "size_t", "long", "unsigned long", "long long", "unsigned long long", "float", "double", "long double"};
+    size_t base_type_size[] = {sizeof(char), sizeof(unsigned char), sizeof(short), sizeof(unsigned short), sizeof(int), sizeof(unsigned int), sizeof(size_t), sizeof(long), sizeof(unsigned long), sizeof(long long), sizeof(unsigned long long), sizeof(float), sizeof(double), sizeof(long double)};
+    void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_pfprint_char,&ud_arr_type_pfprint_unsigned_char, &ud_arr_type_pfprint_short, &ud_arr_type_pfprint_unsigned_short, &ud_arr_type_pfprint_int, &ud_arr_type_pfprint_unsigned_int, &ud_arr_type_pfprint_size_t, &ud_arr_type_pfprint_long, &ud_arr_type_pfprint_unsigned_long, &ud_arr_type_pfprint_long_long, &ud_arr_type_pfprint_unsigned_long_long, &ud_arr_type_pfprint_float, &ud_arr_type_pfprint_double, &ud_arr_type_pfprint_long_double};
     for (ud_ut_count i = 0; i < total; ++i)
     {
         begin->next = ud_arr_type_new(base_type_name[i], base_type_size[i], base_type_fp_print[i], NULL);
