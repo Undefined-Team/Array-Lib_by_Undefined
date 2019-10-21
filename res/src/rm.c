@@ -1,6 +1,6 @@
 #include "ud_array.h"
 
-void    ud_arr_rm_idx(ud_arr *arr, size_t index, ud_bool free_elem)
+void    ud_arr_rm_idx_ctr(ud_arr *arr, size_t index, ud_bool free_elem)
 {
     if (index >= arr->len) return ;
     size_t type_size = arr->type->size;
@@ -17,8 +17,8 @@ void    ud_arr_rm_idx(ud_arr *arr, size_t index, ud_bool free_elem)
     arr->val = new_arr_val;
 }
 
-void    ud_arr_rm_adr(ud_arr *arr, void *adr, ud_bool free_elem)
+void    ud_arr_rm_adr_ctr(ud_arr *arr, void *adr, ud_bool free_elem)
 {
     if (arr->len == 0) return ;
-    ud_arr_rm_idx(arr, (adr - arr->val) / arr->type->size, free_elem);
+    ud_arr_rm_idx_ctr(arr, (adr - arr->val) / arr->type->size, free_elem);
 }

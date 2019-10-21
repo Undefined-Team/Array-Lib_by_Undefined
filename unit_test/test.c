@@ -83,7 +83,7 @@ int main(void)
 
     ud_arr_type_set_fp_print(char, test_new_type_pf_char);
 
-    ud_arr *test = ud_arr_set(float, 2.5, 2.4);
+    ud_arr *test = ud_arr_tset(float, ud_arr_type_get(float), 2.5, 2.4);
     ud_arr *str = ud_arr_set(char, 'c', 'a');
     ud_arr *mainv = ud_arr_set(ud_arr*, test, str);
 
