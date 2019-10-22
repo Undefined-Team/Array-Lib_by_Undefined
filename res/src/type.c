@@ -1,76 +1,96 @@
 #include "ud_array.h"
 
-void ud_arr_type_pfprint_char(void *val, ...)
+// STATIC FUNCTION DEFAULT TYPE
+
+ud_arr_type    *ud_arr_type_char(void)
+{
+    static ud_arr_type *char_type = NULL;
+    if (!char_type) char_type = ud_arr_type_get(char);
+    return char_type;
+}
+
+ud_arr_type    *ud_arr_type_arr(void)
+{
+    static ud_arr_type *type_arr = NULL;
+    if (!type_arr) type_arr = ud_arr_type_get(ud_arr*);
+    return type_arr;
+}
+
+// FP PRINT DEFAULT TYPE
+
+void ud_arr_type_fpprint_char(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%c", char);
 }
 
-void ud_arr_type_pfprint_unsigned_char(void *val, ...)
+void ud_arr_type_fpprint_unsigned_char(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%c", unsigned char);
 }
 
-void ud_arr_type_pfprint_short(void *val, ...)
+void ud_arr_type_fpprint_short(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%hd, ", short);
 }
 
-void ud_arr_type_pfprint_unsigned_short(void *val, ...)
+void ud_arr_type_fpprint_unsigned_short(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%hu, ", unsigned short);
 }
 
-void ud_arr_type_pfprint_int(void *val, ...)
+void ud_arr_type_fpprint_int(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%d, ", int);
 }
 
-void ud_arr_type_pfprint_unsigned_int(void *val, ...)
+void ud_arr_type_fpprint_unsigned_int(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%u, ", unsigned int);
 }
 
-void ud_arr_type_pfprint_size_t(void *val, ...)
+void ud_arr_type_fpprint_size_t(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%zu, ", unsigned int);
 }
 
-void ud_arr_type_pfprint_long(void *val, ...)
+void ud_arr_type_fpprint_long(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%ld, ", long);
 }
 
-void ud_arr_type_pfprint_unsigned_long(void *val, ...)
+void ud_arr_type_fpprint_unsigned_long(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%lu, ", unsigned long);
 }
 
-void ud_arr_type_pfprint_long_long(void *val, ...)
+void ud_arr_type_fpprint_long_long(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%lld, ", long long);
 }
 
-void ud_arr_type_pfprint_unsigned_long_long(void *val, ...)
+void ud_arr_type_fpprint_unsigned_long_long(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%llu, ", unsigned long long);
 }
 
-void ud_arr_type_pfprint_float(void *val, ...)
+void ud_arr_type_fpprint_float(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%f, ", float);
 }
 
-void ud_arr_type_pfprint_double(void *val, ...)
+void ud_arr_type_fpprint_double(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%f, ", double);
 }
 
-void ud_arr_type_pfprint_long_double(void *val, ...)
+void ud_arr_type_fpprint_long_double(void *val, ...)
 {
     UD_ARR_TYPE_INIT_FP_PRINT("%Lf, ", long double);
 }
 
-void ud_arr_type_pffree_ud_arr(void *val, ...)
+// FP FREE DEFAULT TYPE
+
+void ud_arr_type_fpfree_ud_arr(void *val, ...)
 {
     ud_arr_free((ud_arr*)val);
 }
@@ -92,7 +112,7 @@ static ud_arr_type *ud_arr_type_init(ud_arr_type *begin)
     size_t total = 13;
     char *base_type_name[] = {"char", "unsigned char", "short", "unsigned short", "int", "unsigned int", "size_t", "long", "unsigned long", "long long", "unsigned long long", "float", "double", "long double"};
     size_t base_type_size[] = {sizeof(char), sizeof(unsigned char), sizeof(short), sizeof(unsigned short), sizeof(int), sizeof(unsigned int), sizeof(size_t), sizeof(long), sizeof(unsigned long), sizeof(long long), sizeof(unsigned long long), sizeof(float), sizeof(double), sizeof(long double)};
-    void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_pfprint_char,&ud_arr_type_pfprint_unsigned_char, &ud_arr_type_pfprint_short, &ud_arr_type_pfprint_unsigned_short, &ud_arr_type_pfprint_int, &ud_arr_type_pfprint_unsigned_int, &ud_arr_type_pfprint_size_t, &ud_arr_type_pfprint_long, &ud_arr_type_pfprint_unsigned_long, &ud_arr_type_pfprint_long_long, &ud_arr_type_pfprint_unsigned_long_long, &ud_arr_type_pfprint_float, &ud_arr_type_pfprint_double, &ud_arr_type_pfprint_long_double};
+    void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_fpprint_char,&ud_arr_type_fpprint_unsigned_char, &ud_arr_type_fpprint_short, &ud_arr_type_fpprint_unsigned_short, &ud_arr_type_fpprint_int, &ud_arr_type_fpprint_unsigned_int, &ud_arr_type_fpprint_size_t, &ud_arr_type_fpprint_long, &ud_arr_type_fpprint_unsigned_long, &ud_arr_type_fpprint_long_long, &ud_arr_type_fpprint_unsigned_long_long, &ud_arr_type_fpprint_float, &ud_arr_type_fpprint_double, &ud_arr_type_fpprint_long_double};
     for (ud_ut_count i = 0; i < total; ++i)
     {
         begin->next = ud_arr_type_new(base_type_name[i], base_type_size[i], base_type_fp_print[i], NULL);
@@ -121,7 +141,7 @@ ud_arr_type         *ud_arr_type_ctr(char *type_name, size_t type_size, ud_arr_t
     if (req == ud_arr_req_free) return ud_arr_type_free_ctr(begin); 
     if (!begin)
     {
-        begin = ud_arr_type_new("ud_arr*", sizeof(ud_arr*), NULL, &ud_arr_type_pffree_ud_arr);
+        begin = ud_arr_type_new("ud_arr*", sizeof(ud_arr*), NULL, &ud_arr_type_fpfree_ud_arr);
         end = ud_arr_type_init(begin);
     }
     if (req == ud_arr_req_search)
