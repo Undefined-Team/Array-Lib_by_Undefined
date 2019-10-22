@@ -90,6 +90,8 @@ typedef struct                  uds_arr {
 
 // Prototypes
 ud_arr_type                     *ud_arr_type_char(void);
+ud_arr_type                     *ud_arr_type_float(void);
+ud_arr_type                     *ud_arr_type_size_t(void);
 ud_arr_type                     *ud_arr_type_arr(void);
 ud_arr_type                     *ud_arr_type_get_ctr(char *type_name, size_t type_size);
 void                            ud_arr_tval(ud_arr *arr, ud_arr_type *type, size_t len, void *val);

@@ -9,6 +9,20 @@ ud_arr_type    *ud_arr_type_char(void)
     return char_type;
 }
 
+ud_arr_type    *ud_arr_type_float(void)
+{
+    static ud_arr_type *type_float = NULL;
+    if (!type_float) type_float = ud_arr_type_get(float);
+    return type_float;
+}
+
+ud_arr_type    *ud_arr_type_size_t(void)
+{
+    static ud_arr_type *type_size_t = NULL;
+    if (!type_size_t) type_size_t = ud_arr_type_get(size_t);
+    return type_size_t;
+}
+
 ud_arr_type    *ud_arr_type_arr(void)
 {
     static ud_arr_type *type_arr = NULL;
