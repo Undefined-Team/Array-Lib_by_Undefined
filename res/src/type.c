@@ -1,5 +1,7 @@
 #include "ud_array.h"
 
+void __attribute__ ((destructor))  dtor() { ud_arr_type_free(); }
+
 // STATIC FUNCTION DEFAULT TYPE
 
 ud_arr_type    *ud_arr_type_char(void)
