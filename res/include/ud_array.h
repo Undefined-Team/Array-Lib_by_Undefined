@@ -10,20 +10,16 @@
 #include <ud_string.h>
 
 // Macro
-# define UD_ARR_TYPE_INIT_FP_PRINT(format_str, ctype) ({ va_list ap; va_start(ap, val); void *fp_print = va_arg(ap,void*); static char *format = format_str ; if (fp_print) format = fp_print; else printf(format, *(ctype*)val); va_end(ap); })
-/*
 # define UD_ARR_TYPE_INIT_FP_PRINT(format_str, ctype) \
     ({ \
         va_list ap; \
         va_start(ap, val); \
         void *fp_print = va_arg(ap,void*); \
-        static char *format = format_str ; \
-        if (fp_print) format = fp_print; else printf(format, *(ctype*)val); \
+        static char *format = format_str; \
+        if (fp_print) format = fp_print; \
+        else printf(format, *(ctype*)val); \
         va_end(ap); \
     })
-
-    // <<< If need to modify UD_ARR_TYPE_INIT_FP_PRINT >>>
-*/ 
 
 # define ud_arr_type_get(ctype)                             ud_arr_type_get_ctr(#ctype, sizeof(ctype))
 # define ud_arr_type_add(type, type_size)                   ud_arr_type_ctr(type, type_size, ud_arr_req_add)
@@ -53,23 +49,26 @@
 # define ud_arr_rm_adr(arr, adr)                            ud_arr_rm_adr_ctr(arr, adr, false)
 # define ud_arr_frm_adr(arr, adr)                           ud_arr_rm_adr_ctr(arr, adr, true)
 
-# define ud_arr_set(ctype, ...) ({ ud_arr *new_arr; ctype in_val[] = {__VA_ARGS__}; ctype *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(ctype); new_arr = ud_arr_init(ctype, len); ctype *val = (ctype*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; })
-# define ud_arr_tset(ctype, type, ...) ({ ud_arr *new_arr; ctype in_val[] = {__VA_ARGS__}; ctype *in_tmp = in_val; size_t len = sizeof(in_val) / sizeof(ctype); new_arr = ud_arr_tinit(type, len); ctype *val = (ctype*)new_arr->val; for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; })
-/*
 # define ud_arr_set(ctype, ...) \
     ({ \
         ud_arr *new_arr; \
         ctype in_val[] = {__VA_ARGS__}; \
         ctype *in_tmp = in_val; \
         size_t len = sizeof(in_val) / sizeof(ctype); \
-        new_arr = ud_arr_init(ctype, len) \
+        new_arr = ud_arr_init(ctype, len); \
         ctype *val = (ctype*)new_arr->val; \
-        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; \
-        new_arr; \
+        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; \
     })
-
-    // <<< If need to modify ud_arr_set >>>
-*/ 
+# define ud_arr_tset(ctype, type, ...) \
+    ({ \
+        ud_arr *new_arr; \
+        ctype in_val[] = {__VA_ARGS__}; \
+        ctype *in_tmp = in_val; \
+        size_t len = sizeof(in_val) / sizeof(ctype); \
+        new_arr = ud_arr_tinit(type, len); \
+        ctype *val = (ctype*)new_arr->val; \
+        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; \
+    })
 
 // Structures
 typedef enum                    {ud_arr_req_add,ud_arr_req_search,ud_arr_req_free} ud_arr_type_req; 
