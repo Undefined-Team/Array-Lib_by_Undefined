@@ -1,6 +1,6 @@
 #include "ud_array.h"
 
-void __attribute__ ((destructor))  dtor() { ud_arr_type_free(); }
+void __attribute__ ((destructor))  ud_arr_dtor() { ud_arr_type_free(); }
 
 // STATIC FUNCTION DEFAULT TYPE
 
