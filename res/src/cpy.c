@@ -5,7 +5,7 @@ ud_arr      *ud_arr_cpy(ud_arr *src)
     ud_arr *dst;
     ud_bool ischar = src->type == ud_arr_type_char();
 
-    UD_UT_PROT_MALLOC(dst = ud_arr_tinit(src->type, src->len + ischar));
+    ud_ut_prot_malloc(dst = ud_arr_tinit(src->type, src->len + ischar));
     dst->len -= ischar;
     if (dst->type == ud_arr_type_arr())
     {

@@ -114,7 +114,7 @@ void ud_arr_type_fpfree_ud_arr(void *val, ...)
 static ud_arr_type *ud_arr_type_new(char *type_name, size_t type_size, void (*fp_print)(void *val, ...), void (*fp_free)(void *val, ...))
 {
     ud_arr_type *new;
-    UD_UT_PROT_MALLOC(new = ud_ut_malloc(sizeof(ud_arr_type)));
+    ud_ut_prot_malloc(new = ud_ut_malloc(sizeof(ud_arr_type)));
     new->name  = type_name;
     new->size  = type_size;
     new->fp_print = fp_print;
