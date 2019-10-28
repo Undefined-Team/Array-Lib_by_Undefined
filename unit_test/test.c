@@ -23,6 +23,58 @@ void test_new_type_pf_char(void *val, ...)
     printf("<%c>", *(char*)val);
 }
 
+void ud_arr_test_tmp(void)
+{
+    char a = 'a';
+    ud_arr *init = ud_arr_init(char, 5);
+    ud_arr *init_val = ud_arr_init_val(char, 5, &a);
+    ud_arr *init_z = ud_arr_init_z(char, 5);
+    ud_arr *init_set = ud_arr_set(char, 'a', 'b', 'c');
+    ud_arr *init_set2 = ud_arr_set(int, 1, 2, 3, 4, 5);
+    ud_arr *cpy = ud_arr_cpy(init_set);
+    ud_arr *cpy2 = ud_arr_cpy(init_set2);
+
+    ud_ut_test(init->len == 5);
+    ud_ut_test((((char *)init->val)[0] = 'a') == 'a');
+    ud_ut_test((((char *)init->val)[1] = 'b') == 'b');
+    ud_ut_test((((char *)init->val)[2] = 'c') == 'c');
+    ud_ut_test((((char *)init->val)[3] = 'd') == 'd');
+    ud_ut_test((((char *)init->val)[4] = 'e') == 'e');
+    ud_ut_test(init_z->len == 5);
+    ud_ut_test(!ud_mem_cmp(init_z->val, "\0\0\0\0\0", 5));
+    ud_ut_test(init_val->len == 5);
+    ud_ut_test(!ud_mem_cmp(init_val->val, "aaaaa", 5));
+    ud_ut_test(init_set->len == 3);
+    ud_ut_test(!ud_mem_cmp(init_set->val, "abc", 3));
+    ud_ut_test(init_set2->len == 5);
+    ud_ut_test(!ud_mem_cmp(init_set2->val, (int[5]){1,2,3,4,5}, 5 * sizeof(int)));
+
+    ud_arr_rm_idx(init_set2, 3);
+    ud_ut_test(!ud_mem_cmp(init_set2->val, (int[4]){1,2,3,5}, 4 * sizeof(int)));
+    ud_ut_test(init_set2->len = 4);
+    ud_arr_rm_adr(init_set2, &(((int *)init_set2->val)[2]));
+    ud_ut_test(!ud_mem_cmp(init_set2->val, (int[3]){1,2,5}, 3 * sizeof(int)));
+    ud_ut_test(init_set2->len == 3);
+    ud_arr_rm_idx(init_set2, 0);
+    ud_ut_test(!ud_mem_cmp(init_set2->val, (int[2]){2,5}, 2 * sizeof(int)));
+    ud_ut_test(init_set2->len == 2);
+    ud_arr_rm_idx(init_set2, 0);
+    ud_ut_test(!ud_mem_cmp(init_set2->val, (int[1]){5}, 1 * sizeof(int)));
+    ud_ut_test(init_set2->len == 1);
+    ud_arr_rm_idx(init_set2, 0);
+    ud_ut_test(init_set2->len == 0);
+    ud_arr_rm_idx(init_set2, 0); // verif if seg fault
+    ud_ut_test(init_set2->len == 0);
+
+    ud_ut_test(cpy->len == init_set->len);
+    ud_ut_test(cpy != init_set);
+    ud_ut_test(!ud_mem_cmp(cpy->val, init_set->val, cpy->len));
+    ud_ut_test(cpy2->len > init_set2->len);
+    ud_ut_test(cpy2 != init_set2);
+    ud_ut_test(ud_mem_cmp(cpy2->val, init_set2->val, cpy2->len));
+    ud_ut_test(!ud_mem_cmp(cpy2->val, (int[5]){1,2,3,4,5}, 5 * sizeof(int)));
+}
+
 int main(void)
 {
     // ud_arr *test = ud_arr_init_z(sizeof(int), 5);
@@ -81,25 +133,27 @@ int main(void)
     // ud_arr_print(main_test, float, "%f ");
     // ud_arr_free(main_test);
 
-    ud_arr_type_set_fp_print(char, test_new_type_pf_char);
+    // ud_arr_type_set_fp_print(char, test_new_type_pf_char);
 
-    ud_arr *test = ud_arr_tset(float, ud_arr_type_get(float), 2.5, 2.4);
-    ud_arr *str = ud_arr_set(char, 'c', 'a');
-    ud_arr *mainv = ud_arr_set(ud_arr*, test, str);
+    // ud_arr *test = ud_arr_tset(float, ud_arr_type_get(float), 2.5, 2.4);
+    // ud_arr *str = ud_arr_set(char, 'c', 'a');
+    // ud_arr *mainv = ud_arr_set(ud_arr*, test, str);
 
-    ud_arr *cpymain = ud_arr_cpy(mainv);
-    ud_arr_print(cpymain);
-    ud_arr_free(cpymain);
-    printf("before rm %zd\n", mainv->len);
-    // ud_arr_rm_idx(mainv, 0, false);
-    ud_arr **testadr = &(((ud_arr**)mainv->val)[1]);
-    ud_arr_rm_adr(mainv, testadr, true);
-    float *nbr = &(*(float*)test->val);
-    ud_arr_rm_adr(test, nbr, true);
-    printf("before print\n");
-    ud_arr_print(mainv);
-    printf("before free %zd\n", mainv->len);
-    ud_arr_free(mainv);
-    ud_arr_type_free();
+    // ud_arr *cpymain = ud_arr_cpy(mainv);
+    // ud_arr_print(cpymain);
+    // ud_arr_free(cpymain);
+    // printf("before rm %zd\n", mainv->len);
+    // // ud_arr_rm_idx(mainv, 0, false);
+    // ud_arr **testadr = &(((ud_arr**)mainv->val)[1]);
+    // ud_arr_rm_adr(mainv, testadr, true);
+    // float *nbr = &(*(float*)test->val);
+    // ud_arr_rm_adr(test, nbr, true);
+    // printf("before print\n");
+    // ud_arr_print(mainv);
+    // printf("before free %zd\n", mainv->len);
+    // ud_arr_free(mainv);
+    ud_arr_test_tmp();
+    // ud_arr_type_free();
+    
     return (0);
 }
