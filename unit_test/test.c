@@ -33,6 +33,11 @@ void ud_arr_test_tmp(void)
     ud_arr *init_set2 = ud_arr_set(int, 1, 2, 3, 4, 5);
     ud_arr *cpy = ud_arr_cpy(init_set);
     ud_arr *cpy2 = ud_arr_cpy(init_set2);
+    ud_arr *init_null = ud_arr_init(char *, NULL);
+    ud_arr *init_val_null = ud_arr_init_val(char *, 0, NULL);
+    ud_arr *init_z_null = ud_arr_init_z(char *, 0);
+    ud_arr *init_set_null = ud_arr_set(char *, NULL);
+    ud_arr *cpy_null = ud_arr_cpy(NULL);
 
     ud_ut_test(init->len == 5);
     ud_ut_test((((char *)init->val)[0] = 'a') == 'a');
@@ -73,6 +78,16 @@ void ud_arr_test_tmp(void)
     ud_ut_test(cpy2 != init_set2);
     ud_ut_test(ud_mem_cmp(cpy2->val, init_set2->val, cpy2->len));
     ud_ut_test(!ud_mem_cmp(cpy2->val, (int[5]){1,2,3,4,5}, 5 * sizeof(int)));
+
+    ud_ut_test(init_null->len == 0);
+    ud_ut_test(init_null->val == NULL);
+    ud_ut_test(init_val_null->len = 1);
+    ud_ut_test(((char **)init_val_null->val)[0] == NULL);
+    ud_ut_test(init_z_null->len = 1);
+    ud_ut_test(((char **)init_z_null->val)[0] == NULL);
+    ud_ut_test(init_set_null->len = 1);
+    ud_ut_test(((char **)init_set_null->val)[0] == NULL);
+    ud_arr_print(cpy_null);
 }
 
 int main(void)
