@@ -2,6 +2,7 @@
 
 ud_arr      *ud_arr_cpy(ud_arr *src)
 {
+    if (!src) return ud_arr_init(void *, 0);
     ud_arr *dst;
     ud_bool ischar = src->type == ud_arr_type_char();
 

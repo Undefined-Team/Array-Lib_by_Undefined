@@ -33,7 +33,7 @@ void ud_arr_test_tmp(void)
     ud_arr *init_set2 = ud_arr_set(int, 1, 2, 3, 4, 5);
     ud_arr *cpy = ud_arr_cpy(init_set);
     ud_arr *cpy2 = ud_arr_cpy(init_set2);
-    ud_arr *init_null = ud_arr_init(char *, NULL);
+    ud_arr *init_null = ud_arr_init(char *, 0);
     ud_arr *init_val_null = ud_arr_init_val(char *, 0, NULL);
     ud_arr *init_z_null = ud_arr_init_z(char *, 0);
     ud_arr *init_set_null = ud_arr_set(char *, NULL);
@@ -81,13 +81,47 @@ void ud_arr_test_tmp(void)
 
     ud_ut_test(init_null->len == 0);
     ud_ut_test(init_null->val == NULL);
-    ud_ut_test(init_val_null->len = 1);
-    ud_ut_test(((char **)init_val_null->val)[0] == NULL);
-    ud_ut_test(init_z_null->len = 1);
-    ud_ut_test(((char **)init_z_null->val)[0] == NULL);
-    ud_ut_test(init_set_null->len = 1);
+    ud_ut_test(init_val_null->len == 0);
+    ud_ut_test(init_val_null->val == NULL);
+    ud_ut_test(init_z_null->len == 0);
+    ud_ut_test(init_z_null->val == NULL);
+    ud_ut_test(init_set_null->len == 1);
     ud_ut_test(((char **)init_set_null->val)[0] == NULL);
+    ud_ut_test(cpy_null->len == 0);
+    ud_ut_test(cpy_null->val == NULL);
+
+    // verif segfault on print
+    printf("\n");
+    ud_arr_print(init);
+    ud_arr_print(init_val);
+    ud_arr_print(init_z);
+    ud_arr_print(init_set);
+    ud_arr_print(init_set2);
+    ud_arr_print(cpy);
+    ud_arr_print(cpy2);
+    ud_arr_print(init_null);
+    ud_arr_print(init_val_null);
+    ud_arr_print(init_z_null);
+    ud_arr_print(init_set_null);
     ud_arr_print(cpy_null);
+    ud_arr_print(NULL);
+
+    // verif segfault on free
+    ud_arr_free(init);
+    ud_arr_free(init_val);
+    ud_arr_free(init_z);
+    ud_arr_free(init_set);
+    ud_arr_free(init_set2);
+    ud_arr_free(cpy);
+    ud_arr_free(cpy2);
+    ud_arr_free(init_null);
+    ud_arr_free(init_val_null);
+    ud_arr_free(init_z_null);
+    ud_arr_free(init_set_null);
+    ud_arr_free(cpy_null);
+    ud_arr_free(NULL);
+
+    // compile with "./compile.sh noupdate nodepmake && valgrind ./executable to check leaks"
 }
 
 int main(void)
