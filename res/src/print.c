@@ -2,6 +2,7 @@
 
 void        ud_arr_print_ctr(ud_arr *arr, size_t space)
 {
+    if (!arr) return ;
     ud_ut_count len = arr->len;
     if (arr->type != ud_arr_type_arr())
     {

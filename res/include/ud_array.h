@@ -34,9 +34,9 @@
 # define ud_arr_size_t_a                                    ud_arr
 # define ud_arr_str_a                                       ud_arr
 
-# define ud_arr_print(arr)                                  if (arr) ud_arr_print_ctr(arr, 0);
-# define ud_arr_free(w)                                     if (w) ud_arr_free_r(w, -1);
-# define ud_arr_ofree(w)                                    if (w) ud_arr_free_r(w, 0)
+# define ud_arr_print(arr)                                  ud_arr_print_ctr(arr, 0);
+# define ud_arr_free(arr)                                   ud_arr_free_r(arr, -1);
+# define ud_arr_ofree(arr)                                  ud_arr_free_r(arr, 0);
 
 # define ud_arr_val(arr, ctype, len, val)                   ud_arr_tval(arr, ud_arr_type_get(ctype), len, val)
 # define ud_arr_new(ctype, len, val)                        ud_arr_tnew(ud_arr_type_get(ctype), len, val)
