@@ -57,7 +57,8 @@
         size_t len = sizeof(in_val) / sizeof(ctype); \
         new_arr = ud_arr_init(ctype, len); \
         ctype *val = (ctype*)new_arr->val; \
-        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; \
+        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; \
+        new_arr; \
     })
 # define ud_arr_tset(ctype, type, ...) \
     ({ \
@@ -67,7 +68,8 @@
         size_t len = sizeof(in_val) / sizeof(ctype); \
         new_arr = ud_arr_tinit(type, len); \
         ctype *val = (ctype*)new_arr->val; \
-        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; new_arr; \
+        for (ud_ut_count i = 0; i < len; ++i, ++val, ++in_tmp) *val = *in_tmp; \
+        new_arr; \
     })
 
 // Structures
