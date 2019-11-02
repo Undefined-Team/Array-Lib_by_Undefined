@@ -15,7 +15,7 @@ void        ud_arr_print_ctr(ud_arr *arr, size_t space)
         if (fp_print)
             while (len-- > 0)
             {
-                fp_print(val, NULL);
+                if (val) fp_print(val, NULL);
                 val += type_size;
             }
         else while (len-- > 0) printf("(%s), ", name);
