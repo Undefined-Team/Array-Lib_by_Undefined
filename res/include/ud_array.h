@@ -37,6 +37,7 @@
 # define ud_arr_print(arr)                                  ud_arr_print_ctr(arr, 0);
 # define ud_arr_free(arr)                                   ud_arr_free_r(arr, -1);
 # define ud_arr_ofree(arr)                                  ud_arr_free_r(arr, 0);
+# define ud_arr_reorder(_arr, ...)                          ({ size_t _indexs[] = {__VA_ARGS__}; printf("test = %zd\n", ud_ut_statica_len(_indexs)); if (_arr->len != ud_ut_statica_len(_indexs)) ud_ut_error("ud_arr_reoder function need as much indexs as array length"); ud_arr_reoder_ctr(_arr, _indexs); })
 
 # define ud_arr_val(arr, ctype, len, val)                   ud_arr_tval(arr, ud_arr_type_get(ctype), len, val)
 # define ud_arr_new(ctype, len, val)                        ud_arr_tnew(ud_arr_type_get(ctype), len, val)
@@ -106,5 +107,6 @@ void                            ud_arr_free_r(ud_arr *arr, int depth);
 void                            ud_arr_print_ctr(ud_arr *arr, size_t space);
 void                            ud_arr_rm_idx_ctr(ud_arr *arr, size_t index, ud_bool free_elem);
 void                            ud_arr_rm_adr_ctr(ud_arr *arr, void *adr, ud_bool free_elem);
+void                            ud_arr_reoder_ctr(ud_arr *arr, size_t *indexs);
 
 #endif

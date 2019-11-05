@@ -201,8 +201,11 @@ int main(void)
     // ud_arr_print(mainv);
     // printf("before free %zd\n", mainv->len);
     // ud_arr_free(mainv);
-    ud_arr_test_tmp();
-    // ud_arr_type_free();
-    
+    // ud_arr_test_tmp();
+
+    ud_arr *test = ud_arr_set(float, 1.5, 7.2, 8.2, 8.3);    
+    ud_arr_reorder(test, 1, 0, 3, 2);
+    ud_arr_print(test);
+    ud_arr_free(test);
     return (0);
 }
