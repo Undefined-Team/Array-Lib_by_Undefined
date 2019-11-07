@@ -113,7 +113,7 @@ void ud_arr_type_fpprint_long_double(void *val, ...)
 
 void ud_arr_type_fpprint_char_p(void *val, ...)
 {
-    UD_ARR_TYPE_INIT_FP_PRINT("s ", char*);
+    UD_ARR_TYPE_INIT_FP_PRINT("%s ", char*);
 }
 
 // FP FREE DEFAULT TYPE
