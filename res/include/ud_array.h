@@ -91,12 +91,6 @@ typedef struct                  uds_arr {
 }                               ud_arr;
 
 // Prototypes
-ud_arr_type                     *ud_arr_type_char(void);
-ud_arr_type                     *ud_arr_type_float(void);
-ud_arr_type                     *ud_arr_type_size_t(void);
-ud_arr_type                     *ud_arr_type_arr(void);
-ud_arr_type                     *ud_arr_type_ctr(char *type_name, size_t type_size, ud_arr_type_req req);
-ud_arr_type                     *ud_arr_type_get_ctr(char *type_name, size_t type_size);
 void                            ud_arr_tval(ud_arr *arr, ud_arr_type *type, size_t len, void *val);
 ud_arr                          *ud_arr_tnew(ud_arr_type *type, size_t len, void *val);
 ud_arr                          *ud_arr_tinit(ud_arr_type *type, size_t len);
@@ -108,5 +102,16 @@ void                            ud_arr_print_ctr(ud_arr *arr, size_t space);
 void                            ud_arr_rm_idx_ctr(ud_arr *arr, size_t index, ud_bool free_elem);
 void                            ud_arr_rm_adr_ctr(ud_arr *arr, void *adr, ud_bool free_elem);
 void                            ud_arr_reoder_ctr(ud_arr *arr, size_t *indexs);
+ud_arr_size_t_a                 *ud_arr_shape(ud_arr *arr);
+
+ud_arr_type                     *ud_arr_type_ctr(char *type_name, size_t type_size, ud_arr_type_req req);
+ud_arr_type                     *ud_arr_type_get_ctr(char *type_name, size_t type_size);
+
+ud_arr_type                     *ud_arr_type_char(void);
+ud_arr_type                     *ud_arr_type_float(void);
+ud_arr_type                     *ud_arr_type_size_t(void);
+ud_arr_type                     *ud_arr_type_arr(void);
+
+ud_arr_type                     *ud_arr_type_char_p(void);
 
 #endif
