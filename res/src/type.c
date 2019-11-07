@@ -142,11 +142,11 @@ static ud_arr_type *ud_arr_type_new(char *type_name, size_t type_size, void (*fp
 
 static ud_arr_type *ud_arr_type_init(ud_arr_type *begin)
 {
-    size_t total = 14;
     char *base_type_name[] = {"char", "unsigned char", "short", "unsigned short", "int", "unsigned int", "size_t", "long", "unsigned long", "long long", "unsigned long long", "float", "double", "long double", "char*"};
     size_t base_type_size[] = {sizeof(char), sizeof(unsigned char), sizeof(short), sizeof(unsigned short), sizeof(int), sizeof(unsigned int), sizeof(size_t), sizeof(long), sizeof(unsigned long), sizeof(long long), sizeof(unsigned long long), sizeof(float), sizeof(double), sizeof(long double), sizeof(char*)};
     void (*base_type_fp_print[])(void *val, ...) = {&ud_arr_type_fpprint_char,&ud_arr_type_fpprint_unsigned_char, &ud_arr_type_fpprint_short, &ud_arr_type_fpprint_unsigned_short, &ud_arr_type_fpprint_int, &ud_arr_type_fpprint_unsigned_int, &ud_arr_type_fpprint_size_t, &ud_arr_type_fpprint_long, &ud_arr_type_fpprint_unsigned_long, &ud_arr_type_fpprint_long_long, &ud_arr_type_fpprint_unsigned_long_long, &ud_arr_type_fpprint_float, &ud_arr_type_fpprint_double, &ud_arr_type_fpprint_long_double, &ud_arr_type_fpprint_char_p};
-    void (*base_type_fp_free[])(void *val, ...) = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &ud_arr_type_fpfree_char_p};
+    void (*base_type_fp_free[])(void *val, ...) = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &ud_arr_type_fpfree_char_p};
+    size_t total = ud_ut_statica_len(base_type_name);
     for (ud_ut_count i = 0; i < total; ++i)
     {
         begin->next = ud_arr_type_new(base_type_name[i], base_type_size[i], base_type_fp_print[i], base_type_fp_free[i]);
